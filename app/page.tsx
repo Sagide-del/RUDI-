@@ -1,7 +1,8 @@
 'use client';
 import { FormEvent, useEffect, useState } from 'react';
 
-const api = '';
+// Public API origin only; credentials and business data remain on Railway.
+const api = process.env.NEXT_PUBLIC_API_URL ?? 'https://rudi-production.up.railway.app';
 type Dashboard={business:{name:string;slug:string};customers:number;due:number;appointmentsToday:number}; type Customer={id:string;name:string;phone:string;frequency_days:number|null;last_visit_at:string|null}; type Service={id:string;name:string;price_kes:number|null;duration_minutes:number|null};
 async function request(path:string, options:RequestInit={}) { const r=await fetch(`${api}${path}`,{credentials:'include',headers:{'content-type':'application/json',...(options.headers||{})},...options}); const body=await r.json().catch(()=>({})); if(!r.ok)throw Error(body.error||'Something went wrong'); return body; }
 
